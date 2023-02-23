@@ -19,18 +19,20 @@ namespace ConsoleApp1
                 ApiKey = apiKey
             });
 
-            var completionResult = await openAiService.Completions
+            /*var completionResult = await openAiService.Completions
                 .CreateCompletion(new CompletionCreateRequest()
             {
                 Prompt = "What is a programming language?",
                 Model = Models.TextDavinciV2,
-                MaxTokens = 4000
-            });
+                MaxTokens = 100,
+                Temperature= 0.9f,
+                N = 3
+                });
 
             if (completionResult.Successful)
             {
                 foreach(var choice in completionResult.Choices) {
-                    Console.WriteLine(choice);
+                    Console.WriteLine(choice.Text);
                 }
             }
             else
@@ -40,7 +42,22 @@ namespace ConsoleApp1
                     throw new Exception("Unknown Error");
                 }
                 Console.WriteLine($"{completionResult.Error.Code}: {completionResult.Error.Message}");
+            }*/
+
+            var imageRequest = await openAiService.Image
+                .CreateImage(new ImageCreateRequest()
+                {
+                    Prompt = "Pakistan flag with blue background",
+                    N = 2
+                });
+            if (imageRequest.Successful)
+            {
+                foreach (var choice in imageRequest.Results)
+                {
+                    Console.WriteLine(choice.Url);
+                }
             }
+
         }
     }
 }
